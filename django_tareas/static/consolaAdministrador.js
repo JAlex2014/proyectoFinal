@@ -1,7 +1,5 @@
 function editarUsuario(idEditar)
-{
-    console.log(idEditar)
-    /*
+{/*
     PREGUNTA 3
     Capturar informacion del usuario desde base de datos y llenar
     inputs dentro de la ventana modal de editar usuario, permiter que
@@ -20,6 +18,26 @@ function editarUsuario(idEditar)
     Colocarlos como solo lectura (propiedad readonly en el tag HTML)
     
     */
+    let new_id = idEditar.split('editar')[1];
+    fetch(`/conseguirInfoUsuario?idUser=${new_id}`)
+    .then(response => response.json())
+    .then(data => {
+        let nombre = document.getElementById('nombre')
+        let apellido = document.getElementById('apellido')
+        let email = document.getElementById('emailUsuario')
+        let fecha_ingreso = document.getElementById('fechaIngreso')
+        let nro_cel = document.getElementById('nroCelular')
+        let profesion = document.getElementById('profesionUsuario')
+        let id_user = document.getElementById('indUser')
+
+        id_user.value = data.id
+        nombre.value = data.nombre
+        apellido.value = data.apellido
+        email.value = data.email
+        fecha_ingreso.value = data.fechaIngreso
+        nro_cel.value = data.nroCel
+        profesion.value = data.profesion
+    })
 }
 
 function actualizarUsuario()

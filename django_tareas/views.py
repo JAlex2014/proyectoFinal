@@ -311,3 +311,16 @@ def descargarReporteUsuarios(request):
     reporteUsuarios=open(nombreArchivo,'rb')
     
     return FileResponse(reporteUsuarios,as_attachment=True)
+
+def conseguirInfoUsuario(request):
+    idUser = request.GET.get('idUser')
+    user_selected = User.objects.get(id=idUser)
+    return JsonResponse({
+        'id': user_selected.id,
+        'nombre': user_selected.first_name,
+        'apellido': user_selected.last_name,
+        'email': user_selected.email,
+        'fechaIngreso': user_selected.datosusuario.fechaIngreso.strftime("%d-%m-%Y"),
+        'nroCel':user_selected.datosusuario.nroCelular,
+        'profesion':user_selected.datosusuario.profesionUsuario,
+    })

@@ -65,7 +65,7 @@
                                 <td class="text-center"><a class="btn btn-info" href="{% url 'django_tareas:verUsuario' usuario.id %}"><i class="fa-solid fa-eye"></i></a></td>
                                 <td class="text-center"><button data-bs-toggle="modal" data-bs-target="#editarUsuario" class="btn btn-warning" id="editar{{ usuario.id }}" onclick="editarUsuario(this.id)"><i class="fa-solid fa-edit"></i></button></td>
                                 <td class="text-center"><a class="btn btn-danger" href="{% url 'django_tareas:eliminarUsuario' usuario.id %}"><i class="fa-solid fa-trash"></i></a></td>
-                            </tr>
+                            </tr>s
                             {% endfor %}
                         </tbody>
                     </table>
@@ -160,10 +160,11 @@
                     Crear los inputs necesarios para poder cargar la informacion
                     del usuario, indicar los label's de los campos apropiadamente
                 -->
+                <h1 style="display: none;" id="indUser"></h1>
                 <div class="row form-group justify-content-around mb-3">
                     <div class="col-5">
                         <label>Nombre :</label>
-                        <input class="form-control" type="text" readonly id="username">
+                        <input class="form-control" type="text" readonly id="nombre">
                     </div>
                     <div class="col-5">
                         <label>Apellido :</label>
@@ -177,7 +178,7 @@
                     </div>
                     <div class="col-5">
                         <label>Fecha de ingreso :</label>
-                        <input class="form-control" type="date" readonly id="fechaIngreso">
+                        <input class="form-control" type="text" readonly id="fechaIngreso">
                     </div>
                 </div>
                 <div class="row form-group justify-content-around mb-3">
