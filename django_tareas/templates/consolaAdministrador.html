@@ -145,25 +145,55 @@
     </div>
 </div>
 
+<!--Editar usuario-->
 <div class="modal fade" id="editarUsuario" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 id="cargaId" style="display: none;"></h1>
-                <h5 class="modal-title">Crear nuevo usuario</h5>
+                <h5 class="modal-title">Editar usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Editar usuario
                 <!--
                     PREGUNTA 2
                     Crear los inputs necesarios para poder cargar la informacion
                     del usuario, indicar los label's de los campos apropiadamente
                 -->
+                <div class="row form-group justify-content-around mb-3">
+                    <div class="col-5">
+                        <label>Nombre :</label>
+                        <input class="form-control" type="text" readonly id="username">
+                    </div>
+                    <div class="col-5">
+                        <label>Apellido :</label>
+                        <input class="form-control" type="text" readonly id="apellido">
+                    </div>
+                </div>
+                <div class="row form-group justify-content-around mb-3">
+                    <div class="col-5">
+                        <label>Email :</label>
+                        <input class="form-control" type="email" readonly id="emailUsuario">
+                    </div>
+                    <div class="col-5">
+                        <label>Fecha de ingreso :</label>
+                        <input class="form-control" type="date" readonly id="fechaIngreso">
+                    </div>
+                </div>
+                <div class="row form-group justify-content-around mb-3">
+                    <div class="col-5">
+                        <label>Nro Celular :</label>
+                        <input class="form-control" type="text" id="nroCelular" required>
+                    </div>
+                    <div class="col-5">
+                        <label>Profesion :</label>
+                        <input class="form-control" type="text" id="profesionUsuario" required>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="actualizarUsuario()">Registrar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="actualizarUsuario()">Actualizar</button>
             </div>
         </div>
     </div>

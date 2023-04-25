@@ -287,6 +287,7 @@ def descargarReporteUsuarios(request):
     archivoPdf.drawString(270,650, f'{request.user.username}')
     archivoPdf.drawString(270,635, f'{request.user.datosusuario.tipoUsuario}')
 
+    #Grid con todos los usuarios
     lista_x = [40,550]
     lista_y = [500,570]
     archivoPdf.setStrokeColorRGB(0,0,1)
@@ -304,6 +305,7 @@ def descargarReporteUsuarios(request):
         archivoPdf.drawString(lista_x[0] + 20, lista_y[1]-55, f'Qty of Tareas: {qty_tareasUsuario}')
         lista_y[0] = lista_y[0] - 90
         lista_y[1] = lista_y[1] - 90
+        
     archivoPdf.save()
 
     reporteUsuarios=open(nombreArchivo,'rb')
