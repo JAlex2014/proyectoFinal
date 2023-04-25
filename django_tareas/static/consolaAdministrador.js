@@ -28,7 +28,7 @@ function editarUsuario(idEditar)
         let fecha_ingreso = document.getElementById('fechaIngreso')
         let nro_cel = document.getElementById('nroCelular')
         let profesion = document.getElementById('profesionUsuario')
-        let id_user = document.getElementById('indUser')
+        let id_user = document.getElementById('cargaId')
 
         id_user.value = data.id
         nombre.value = data.nombre
