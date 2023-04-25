@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import datosUsuario, tareasInformacion, comentarioTarea
+from django.db.models import Sum
 import datetime
 import json
 
@@ -256,6 +257,55 @@ def descargarReporteUsuarios(request):
     Tipo de usuarios que genera el reporte
     
     """
+    #Queries
+    usuariosTotales = User.objects.all().order_by('id')
+    qtyUsuarios = datosUsuario.objects.count()
+    current_date = datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+
     nombreArchivo = 'reporteUsuarios.pdf'
+    archivoPdf = canvas.Canvas(nombreArchivo, A4)
+
+    #Cabecera
+    archivoPdf.drawImage('./django_tareas/static/logoApp.png', 20, 720, width=140, height=80)
+    archivoPdf.drawImage('./django_tareas/static/logoPUCP.png',430, 720, width=140, height=80)
+    archivoPdf.setFont('Helvetica-Bold',25)
+    archivoPdf.drawCentredString(297.5,750,'Reporte de usuarios')
+
+    archivoPdf.setFont('Helvetica-Bold',12)
+    archivoPdf.drawString(40,680, 'Fecha de creación del reporte')
+    archivoPdf.drawString(40,665, 'Cantidad de usuarios')
+    archivoPdf.drawString(40,650, 'Usuario que generó el reporte')
+    archivoPdf.drawString(40,635, 'Tipo de usuario que generó el reporte')
+    archivoPdf.drawString(256,680, ':')
+    archivoPdf.drawString(256,665, ':')
+    archivoPdf.drawString(256,650, ':')
+    archivoPdf.drawString(256,635, ':')
+
+    archivoPdf.setFont('Helvetica',12)
+    archivoPdf.drawString(270,680, f'{current_date}')
+    archivoPdf.drawString(270,665, f'{qtyUsuarios}')
+    archivoPdf.drawString(270,650, f'{request.user.username}')
+    archivoPdf.drawString(270,635, f'{request.user.datosusuario.tipoUsuario}')
+
+    lista_x = [40,550]
+    lista_y = [500,570]
+    archivoPdf.setStrokeColorRGB(0,0,1)
+
+    for usuario in usuariosTotales:
+        qty_tareasUsuario = tareasInformacion.objects.filter(usuarioRelacionado=usuario).count()
+        archivoPdf.grid(lista_x,lista_y)
+        archivoPdf.setFont('Helvetica',12)
+        archivoPdf.drawString(lista_x[0] + 20, lista_y[1]-15, f'Username: {usuario}')
+        archivoPdf.drawString(lista_x[0] + 155, lista_y[1]-15, f'Fullname: {usuario.first_name}, {usuario.last_name}')
+        archivoPdf.drawString(lista_x[0] + 325, lista_y[1]-15, f'Profession: {usuario.datosusuario.profesionUsuario}')
+        archivoPdf.drawString(lista_x[0] + 20, lista_y[1]-35, f'Rol: {usuario.datosusuario.tipoUsuario}')
+        archivoPdf.drawString(lista_x[0] + 155, lista_y[1]-35, f'Cellphone: {usuario.datosusuario.nroCelular}')
+        archivoPdf.drawString(lista_x[0] + 325, lista_y[1]-35, f'Signed up date: {usuario.datosusuario.fechaIngreso}')  
+        archivoPdf.drawString(lista_x[0] + 20, lista_y[1]-55, f'Qty of Tareas: {qty_tareasUsuario}')
+        lista_y[0] = lista_y[0] - 90
+        lista_y[1] = lista_y[1] - 90
+    archivoPdf.save()
+
     reporteUsuarios=open(nombreArchivo,'rb')
+    
     return FileResponse(reporteUsuarios,as_attachment=True)
