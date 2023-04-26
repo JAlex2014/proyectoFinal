@@ -96,7 +96,26 @@ function getCookie(name)
 
 function finalizarTarea(idFinalizar)
 {
-    console.log(idFinalizar)
+    new_id = idFinalizar.split('finalizar')[1];
+    estado_id = 'estado'+ new_id;
+    let estado_seleccionado =  document.getElementById(estado_id)
+    estado_seleccionado.innerHTML = "FINALIZADO"
+    datos = {
+        'estado': estado_seleccionado.innerHTML,
+        'idTarea': new_id
+    }
+    fetch('/finalizarTarea',{
+        method:"POST",
+        headers:{
+            "X-Requested-With":"XMLHttpRequest",
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body:JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+    })
     /*
     Pregunta 5
     a.
@@ -105,7 +124,7 @@ function finalizarTarea(idFinalizar)
     split en javascript (investigar), con dicho id se puede armar el string 'estado' + id
     para capturar el elemento correspondiente a la celda del estado, a traves de su propiedad 
     innerHTML se puede cambiar el valor.
-
+    
     b.
     Los cambios realizados en a solo se veran en el DOM, al actualizarlo todo volvera
     a su valor inicial, por lo que el siguiente paso es postear informacion al servidor
@@ -115,4 +134,5 @@ function finalizarTarea(idFinalizar)
     ha sido modificada tambien en base de datos
     
     */
+   
 }

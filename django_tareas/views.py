@@ -337,3 +337,14 @@ def actualizarUsuario(request):
     return JsonResponse({
         'resp': 'Usuario actualizado exitosamente'
     })
+
+def finalizarTarea(request):
+    datos = json.load(request)
+    estado = datos.get('estado')
+    idTarea = datos.get('idTarea')
+    tareaSeleccionada = tareasInformacion.objects.get(id=idTarea)
+    tareaSeleccionada.estadoTarea = estado
+    tareaSeleccionada.save()
+    return JsonResponse({
+        'resp': 'Tarea finalizada exitosamente'
+    })
