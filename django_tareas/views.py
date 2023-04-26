@@ -324,3 +324,16 @@ def conseguirInfoUsuario(request):
         'nroCel':user_selected.datosusuario.nroCelular,
         'profesion':user_selected.datosusuario.profesionUsuario,
     })
+
+def actualizarUsuario(request):
+    datos = json.load(request)
+    nroCelular = datos.get('nroCelular')
+    profesion = datos.get('profesion')
+    idusuario = datos.get('idusuario')
+    usuarioRelacionado = User.objects.get(id=idusuario)
+    usuarioRelacionado.datosusuario.nroCelular = nroCelular
+    usuarioRelacionado.datosusuario.profesionUsuario = profesion
+    usuarioRelacionado.datosusuario.save()
+    return JsonResponse({
+        'resp': 'Usuario actualizado exitosamente'
+    })

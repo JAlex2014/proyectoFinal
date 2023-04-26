@@ -18,6 +18,7 @@ function editarUsuario(idEditar)
     Colocarlos como solo lectura (propiedad readonly en el tag HTML)
     
     */
+   
     let new_id = idEditar.split('editar')[1];
     fetch(`/conseguirInfoUsuario?idUser=${new_id}`)
     .then(response => response.json())
@@ -30,7 +31,7 @@ function editarUsuario(idEditar)
         let profesion = document.getElementById('profesionUsuario')
         let id_user = document.getElementById('cargaId')
 
-        id_user.value = data.id
+        id_user.innerHTML = data.id
         nombre.value = data.nombre
         apellido.value = data.apellido
         email.value = data.email
@@ -41,12 +42,52 @@ function editarUsuario(idEditar)
 }
 
 function actualizarUsuario()
-{
-    /*
+{   /*
     PREGUNTA 4
     Capturar los datos de los campos input's de la ventana de editar usuario,
     el id del usuario lo puedes capturar de la carga realizada en el elemento
     H1 cuyo id es cargaId. Con los datos capturados postearlos en la base de datos
     y actualizar la informacion del usuario
     */
+    let nroCelular =  document.getElementById('nroCelular')
+    let profesion = document.getElementById('profesionUsuario')
+    let idusuario = document.getElementById('cargaId')
+    let aux = 'editar'+idusuario.innerHTML;
+    datos = {
+        'nroCelular' : nroCelular.value,
+        'profesion' : profesion.value,
+        'idusuario' : idusuario.innerHTML
+    }
+
+    fetch('/actualizarUsuario',{
+        method: 'POST',
+        headers: {
+            "X-Requested-With":"XMLHttpRequest",
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify(datos)
+   })
+   .then(response => response.json())
+   .then(data => {
+        console.log(data)
+   })
+}
+
+function getCookie(name)
+{
+    let cookieValue = null;
+    if(document.cookie && document.cookie !== "")
+    {
+        const cookies = document.cookie.split(';');
+        for(let i = 0; i < cookies.length; i++)
+        {
+            const cookie = cookies[i].trim();
+            if(cookie.substring(0,name.length + 1) === (name + "="))
+            {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue 
 }

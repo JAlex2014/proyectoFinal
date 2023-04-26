@@ -65,7 +65,7 @@
                                 <td class="text-center"><a class="btn btn-info" href="{% url 'django_tareas:verUsuario' usuario.id %}"><i class="fa-solid fa-eye"></i></a></td>
                                 <td class="text-center"><button data-bs-toggle="modal" data-bs-target="#editarUsuario" class="btn btn-warning" id="editar{{ usuario.id }}" onclick="editarUsuario(this.id)"><i class="fa-solid fa-edit"></i></button></td>
                                 <td class="text-center"><a class="btn btn-danger" href="{% url 'django_tareas:eliminarUsuario' usuario.id %}"><i class="fa-solid fa-trash"></i></a></td>
-                            </tr>s
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -185,7 +185,7 @@
                         <label>Nro Celular :</label>
                         <input class="form-control" type="text" id="nroCelular" required>
                     </div>
-                    <div class="col-5">
+                    <div class="col-6">
                         <label>Profesion :</label>
                         <input class="form-control" type="text" id="profesionUsuario" required>
                     </div>
